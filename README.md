@@ -1,4 +1,4 @@
-# WK2 Choose One Voice
+# [NOT WORKING PROPERLY, DON'T DO IT FOR NOW] WK2 Choose One Voice
 > Anki add-on to erase one of the two audio speakers coming with the 'WaniKani Ultimate 2: Electric Boogaloo' deck.
 
 ## How does it work?
