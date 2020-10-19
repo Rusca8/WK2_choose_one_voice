@@ -25,3 +25,9 @@ _It'll ask for confirmation before erasing stuff._
 ### Deleting the unused .mp3 files
 8. Go to ```tools/check media``` on the Anki menu.
 9. Press ```delete unused``` at the bottom.
+10. You can also delete them from the ```media trash``` folder too, if you want.
+
+### Deleting them from the recycling bin too.
+11. Find the user folder (outside of the add-ons folder there's your folder, such as ```User 1```).
+12. Go inside and find the ```media.trash``` folder.
+13. Delete stuff from there (this is all the media files Anki has used in the past but you told it to delete them cause no notes use them).
