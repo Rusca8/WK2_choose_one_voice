@@ -20,7 +20,7 @@ _* Actually, a really small part of the notes come with only one of the audios._
 5. Go to ```tools/choose one voice (WK2)``` in the Anki menu.
 6. Choose which voice you want to keep (male or female).  
 _It'll ask for confirmation before erasing stuff._
-7. Once audio references are deleted from the field, you can check for unused media to actually delete the .mp3 files.
+7. Once audio references are deleted from the field, you can check for unused media to actually delete the ```.mp3``` files.
 
 ### Deleting the unused .mp3 files
 8. Go to ```tools/check media``` on the Anki menu.
