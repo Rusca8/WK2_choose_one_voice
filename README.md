@@ -1,5 +1,5 @@
 # WK2 Choose One Voice
->> Anki add-on to erase one of the two audio speakers coming with the 'WaniKani Ultimate 2: Electric Boogaloo' deck.
+> Anki add-on to erase one of the two audio speakers coming with the 'WaniKani Ultimate 2: Electric Boogaloo' deck.
 
 ## How does it work?
 Each note with audio in WK2 has two audios* (first Female, then Male) in a field named 'Audio'.
