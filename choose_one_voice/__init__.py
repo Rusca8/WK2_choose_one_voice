@@ -5,8 +5,6 @@ from aqt.utils import showInfo, showWarning
 # import all of the Qt GUI library
 from aqt.qt import *
 
-import random
-
 
 def ask_which():
     msg = QMessageBox()
