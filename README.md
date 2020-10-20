@@ -25,7 +25,13 @@ _However, you can check at the bottom the analysis I made to make sure it works 
 4. Select the "WaniKani Ultimate 2: Electric Boogaloo" deck in Anki (so that it's the current deck).
 5. Go to ```tools/choose one voice (WK2)``` in the Anki menu.
 6. Choose which voice you want to keep (male or female).  
-_It'll ask for confirmation before erasing stuff._
+
+![Choose one voice](choose_sm.png)
+
+_It'll ask for confirmation before erasing stuff._  
+
+![Analusis and confirm](analysis_sm.png)
+
 7. Once audio references are deleted from the field, you can check for unused media to actually delete the ```.mp3``` files.
 
 ### Deleting the unused .mp3 files
