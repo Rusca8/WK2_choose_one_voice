@@ -9,7 +9,7 @@ When executed, any card with an even number of audios in the 'Audio' field is le
 Also, since 4 becomes 2, the script adds a · in between the processed audios as a mark to avoid processing them ever again.  
 _...so you can use it on the same deck again if you ever get new cards with an update._
 
-_* Actually, a really small part of the notes come with only one (or even three) audios. See the Analysis at the bottom._
+_* Actually, a really small part of the notes come with only one (or even three) audios. See the [Analysis](#Analysis) at the bottom._
 
 ## How to use it
 _Disclaimer: Before doing anything I'd recommend making a backup with the programming info and multimedia, just in case...  
@@ -44,7 +44,7 @@ _It'll ask for confirmation before erasing stuff._
 12. Go inside and find the ```media.trash``` folder.
 13. Delete stuff from there (this is all the media files Anki has used in the past but were deleted when choosing ```delete unused```).
 
-## Analysis of WK2 deck content
+## Analysis of WK2 deck content <a name="Analysis"></a>
 > Based on 9/6/2020 update
 
 ### Audio files
