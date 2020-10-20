@@ -145,7 +145,7 @@ def erase(delete="Male"):
 
 # create a new menu item
 action = QAction('Choose one voice (WK2)', mw)
-# set it to call testFunction when it's clicked
+# set it to call ask_which when it's clicked
 action.triggered.connect(ask_which)
 # and add it to the tools menu
 mw.form.menuTools.addAction(action)
