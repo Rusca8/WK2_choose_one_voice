@@ -1,12 +1,14 @@
 # import the main window object (mw) from aqt
 from aqt import mw
-# import the "show info" tool from utils.py
-from aqt.utils import showInfo, showWarning
 # import all of the Qt GUI library
 from aqt.qt import *
+# import the "show info" tool from utils.py
+from aqt.utils import showInfo, showWarning
 
 
 def ask_which():
+    """message box: choose male or female
+    """
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Question)
     msg.setText("Which voice you want to keep?")
@@ -22,13 +24,18 @@ def ask_which():
 
 
 def which_btn(i):
-    deckname = mw.col.decks.current()["name"]  # get current deck name
+    """Analysis of the current deck's audios
 
+    Catches the button pressed on ask_which, counts audios, pairs and unprocessed pairs
+    Shows message box asking for confirmation before deleting stuff.
+    """
+    deckname = mw.col.decks.current()["name"]  # get current deck name
     ids = mw.col.findNotes("deck:current")  # get id for all notes on the current deck
+
     # counting audios
-    counts = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    cdouble = 0
-    cdnew = 0
+    counts = [0, 0, 0, 0, 0, 0, 0, 0, 0]  # 1 to 8, and then the last one is "9 or more"
+    cdouble = 0  # audios in pairs (2, 4, 6, 8)
+    cdnew = 0  # audios in pairs never processed (when I process, I add "·" to avoid processing again 2s coming from 4s)
     for note_id in ids:
         note = mw.col.getNote(note_id)  # get note from the given id
         if "Audio" in note:
@@ -40,7 +47,7 @@ def which_btn(i):
                     if "·" not in note["Audio"]:  # not-processed-before pairs
                         cdnew += 1
 
-    # message box choose male vs female
+    # message box: analysis and confirmation
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Warning)
     text = "<b>Deck: '%s'</b><br><br>Content:<br>" % deckname
@@ -69,6 +76,7 @@ def which_btn(i):
     msg.setDefaultButton(butC)
     butC.setText("Cancel")
 
+    # connect the msgbox either with keep_female or keep_male
     if i.text() == "Female":
         msg.buttonClicked.connect(keep_female)
     elif i.text() == "Male":
@@ -76,7 +84,7 @@ def which_btn(i):
     else:
         showInfo("Something weird happened (Err: which_btn)")
 
-    if any(x for x in counts):
+    if any(x for x in counts):  # check if the deck is the proper one (audios in 'Audio' field)
         msg.exec_()  # show message box
     else:
         showWarning("I don't think you can do this here,<br>my friend...<br><br>Expected audios in 'Audio' field.<br>"
@@ -84,6 +92,7 @@ def which_btn(i):
 
 
 def keep_male(i):
+    """Catches the pressed button and runs the deletion if needed"""
     if i.text() == "Erase":
         erase("Female")
     elif i.text() == "Cancel":
@@ -93,6 +102,7 @@ def keep_male(i):
 
 
 def keep_female(i):
+    """Catches the pressed button and runs the deletion if needed"""
     if i.text() == "Erase":
         erase("Male")
     elif i.text() == "Cancel":
@@ -102,33 +112,35 @@ def keep_female(i):
 
 
 def erase(delete="Male"):
+    """Goes through all notes in the deck and keeps only the selected audios.
+
+    :param delete: which to delete (Male or Female)
+    """
     # get id for all notes on the current deck
     ids = mw.col.findNotes("deck:current")
-    # processing all of them
-    a_female = "none"
-    a_male = "none"
+    # go through all of them
     for note_id in ids:
         note = mw.col.getNote(note_id)  # get note from the given id
         if "Audio" in note:
             if "[" in note["Audio"] and "·" not in note["Audio"]:  # already processed pairs will have a "·"
-                count = note["Audio"].count("]")  # how many audios are there?
-                if not count % 2:  # even number of audios
-                    audios = note["Audio"].split("]")
-                    for x in range(len(audios)):  # get the "]" back
+                count = note["Audio"].count("]")  # how many audios are there? (audios are like [somthing.mp3])
+                if not count % 2:  # even number of audios (do nothing to odd quantities)
+                    audios = note["Audio"].split("]")  # splits into a list of single audios
+                    for x in range(len(audios)):  # get the "]" back (the split eats them hahah)
                         if audios[x]:
                             audios[x] += "]"
-                    a_female = "·".join(audios[x] for x in range(len(audios)) if not x % 2)  # even audios
-                    a_male = "·".join(audios[x] for x in range(len(audios)) if x % 2)  # odd audios
-                    if a_female.endswith("·"):  # delete the last "·", which I don't need
+                    a_female = "·".join(audios[x] for x in range(len(audios)) if not x % 2)  # join even (female) audios
+                    a_male = "·".join(audios[x] for x in range(len(audios)) if x % 2)  # join odd (male) audios
+                    if a_female.endswith("·"):  # delete the last "·", which I don't need nor want
                         a_female = a_female[:-1]
-                    if a_male.endswith("·"):
+                    if a_male.endswith("·"):    # otherwise join makes it like [sound]·[sound]· (or worse: [sound]·)
                         a_male = a_female[:-1]
                     # keep the chosen one
                     if delete == "Male":
                         note["Audio"] = a_female
                     elif delete == "Female":
                         note["Audio"] = a_male
-                    note.flush()
+                    note.flush()  # save changes
     showInfo("Deletion completed.")
 
 # create a new menu item
